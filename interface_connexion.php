@@ -1,7 +1,7 @@
 <?php 
 
     session_start();
-    if (isset($_POST['boutton-Se-connecter'])) {
+    if (isset($_POST['btn-Se-connecter'])) {
 
         // vérifier si y'a des informations écrite dans le formulaire 
         if (isset($_POST['Email']) && isset($_POST['MDP'])) {
@@ -13,11 +13,7 @@
             $erreur = "";
             
             // connexion a la base de données :
-            $nom_serv = "localhost";
-            $utilisateur = "root";
-            $mot_de_passe = "";
-            $nom_base_données = "bdpweb";
-            $connexion = new mysqli($nom_serv, $utilisateur, $mot_de_passe, $nom_base_données);
+           include_once "connexion_bd.php";
 
 
             // requete pour selectionner les utilisateurs de la bd
@@ -25,9 +21,12 @@
             $cpt_ligne = mysqli_num_rows($req);
             
             if($cpt_ligne > 0){
+                // créer une variable de type session qui vas contenir le prenom de l'utilisateur 
+                $row = mysqli_fetch_assoc($req);
+                $PrenomUser = $row['Prenom'];
+                $_SESSION['PrenomUser'] = $PrenomUser;
+
                 header("Location:confirmation_connexion.php");
-                // créer une variable de type session qui vas contenir l'email de l'utilisateur 
-                $_SESSION['Email'] = $Email;
             }else{
                 $erreur = " E-mail ou Mot de passe incorectes !";
             }
@@ -36,38 +35,43 @@
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
     <link rel="stylesheet" href="Style/connexion.css">
+   
+    <title>Connexion</title>
 </head>
 <body>
-    <section class="block">
-        <h1>Connexion </h1>
-        <div class="input">
+    <section class="card">
+        <h1 ">Connexion </h1>
+        <div class="formulaire-connexion">
             <?php 
                 if (isset($erreur)) {
                     echo '<p class="message_erreur">' . $erreur . '</p>';
                 }
             ?>
             <form id="connexionForm" action="" method="post">
-                <div class="input-Email">
+                <div class="champ">
                     <label for="Email">E-mail :</label>
                     <input type="email" id="Email" name="Email" required>
                 </div>
-                <div class="input-MDP">
+                <div class="champ">
                     <label for="MDP">Mot de passe :</label>
                     <input type="password" id="MDP" name="MDP" required>
                 </div>
-                <div class="bouton">
-                    <button type="submit" value="Se connecter" name="boutton-Se-connecter">Se connecter</button> 
+                <div class="btn">
+                    <button type="submit" value="Se connecter" name="btn-Se-connecter">Se connecter</button> 
                 </div> 
-                <a href="#" class="btn-link">Vous n'avez pas de compte ?</a>   
+                   
             </form>
         </div>
+        <a href="Interface_inscription.php" class="btn-link">Vous n'avez pas de compte ?</a>
     </section>
+
+
 </body>
 </html>

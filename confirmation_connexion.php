@@ -14,7 +14,7 @@
 </head>
 <body>
     <?php
-    echo '<h1>Vous êtes connecté avec succès '  . $_SESSION['Email'] . '!</h1>';
+    echo '<h1>Vous êtes connecté avec succès '  . $_SESSION['PrenomUser'] . '!</h1>';
     ?>
 </body>
 </html>

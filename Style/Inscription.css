@@ -4,36 +4,31 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
 }
 
-
 body{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     height: 100vh;
     background-color: #DEDEDE;
 }
 
 .card{
+    margin: 50px 2px;
     padding: 30px;
     display: flex;
-    width: 300px;
     flex-direction: column;
+    width: 300px;
+    overflow: auto;
+    background-color: #212121 ;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
-    background-color: #212121 ;
     box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, #212121 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 .card h1{
     text-align: center;
     font-size: 42px;
-    color: #FFB2B2
-}
-
-.formulaire-connexion form{
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
+    color: #FFB2B2;
 }
 
 .message_erreur{
@@ -43,26 +38,30 @@ body{
     font-size: 18px;
 }
 
-.formulaire-connexion input{
-    padding: 5px 5px;
-    margin: 3px;
-    outline: 0;
-    border: 2px solid #27374D;
-    border-radius: 6px;
+.formulaire-inscription form{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
 
-.formulaire-connexion label{
-    font-size: 18px ;
-    color: #DEDEDE;
-}
-
-.champ{
+.champ {
     display: flex;
     flex-direction: column;
     margin: 5px;
 }
 
+.formulaire-inscription label{
+    font-size: 18px ;
+    color: #DEDEDE;
+}
 
+.formulaire-inscription input{
+    padding: 5px;
+    margin: 3px;
+    outline: 0;
+    border: 2px solid #27374D;
+    border-radius: 6px;
+}
 
 .btn button{
     --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
@@ -106,3 +105,4 @@ body{
 .btn-link:hover {
     color: #ffeba7;
 }
+   
