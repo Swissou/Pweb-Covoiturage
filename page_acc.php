@@ -1,124 +1,21 @@
-<?php
-//include 'connect.php';
+<?php 
+    // demarage de la session
+    session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="Style/page_acc.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 
 
     <title>Page d'accueil - Covoiturage</title>
-    <style>
-        /* Styles CSS inchangés pour la simplicité */
 
-        body {
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #d3d0e5;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1em;
-            text-align: center;
-			background: url('imagecov.png')no-repeat;
-			background-position: right;
-			background-size:200px;
-        }
-		h1{
-			
-			color: #333; 
-			text-align: left; 
-		}
-        nav {
-			
-            background-color: #000c89;
-            padding: 0.5em;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5em 1em;
-            margin: 0 1em;
-        }
-
-        #rideList {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .ride-card {
-		
-            width: 300px;
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            background-color: #00071d;
-			color:#d0d7ff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-			
-        }
-		
-		button {
-			padding: 5px 10px;
-			margin:5px;
-			font-size: 12px;
-			cursor: pointer;
-			background-color: #68a0f1; 
-			color: #fff;
-			border: none; 
-			border-radius: 15px; 
-			transition: background-color 0.5s;
-			
-			
-			
-}
-
-		button:hover {
-			background-color: #000c89; 
-}
-		/* Styles pour le popup */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-		#map {
-            height: 300px;
-            width: 400px; 
-        }
-        
-    </style>
 </head>
 <body>
     <header>
@@ -129,8 +26,17 @@
         <a href="page_acc.php">Accueil</a>
         <a href="recherche.php">Rechercher un trajet</a>
         <a href="#">Proposer un trajet</a>
-        <a href="interface_connexion.php">Connexion</a>
-        <a href="#">Inscription</a>
+        <?php
+    // Vérifiez si l'utilisateur est connecté
+    if (isset($_SESSION["id_utilisateur"]) && $_SESSION["id_utilisateur"]){
+        echo '<a href="mon_compte.php">Mon Compte</a>';
+        echo '<a href="deconnexion.php">Déconnexion</a>';
+    } else {
+		echo '<a href="interface_inscription.php">Inscription</a>';
+        echo '<a href="interface_connexion.php">Connexion</a>';
+        
+    }
+    ?>
     </nav>
  <button onclick="searchNearby()">Trouver les trajets à proximité</button>
 
@@ -179,7 +85,9 @@ ADD COLUMN destination_longitude DOUBLE;
                 echo "<p><strong>Lieu de départ:</strong> " . $row["lieu_depart"] . "</p>";
                 echo "<p><strong>Destination:</strong> " . $row["destination"] . "</p>";
                 echo "<p><strong>Heure de départ:</strong> " . $row["heure_depart"] . "</p>";
-				echo "<button onclick='reserveRide(${row["id"]})'>Réserver</button>";
+				echo "<p><strong>Conducteur:</strong> " . $row["conducteur"] . "</p>";
+                echo "<p><strong>Places disponibles:</strong> " . $row["places_disponibles"] . "</p>";
+				echo "<button onclick='reserveRide(${row["id"]}, ${row["places_disponibles"]})'>Réserver</button>";
 				 echo "<button onclick='showMap(${row["lieu_depart_latitude"]}, ${row["lieu_depart_longitude"]}, ${row["destination_latitude"]}, ${row["destination_longitude"]})'>Voir les détails</button>";
 				echo "</div>";
                
@@ -246,9 +154,20 @@ function hidePopup() {
 
 // Fonction de réservation de trajet
         function reserveRide(rideId) {
-            alert(`Trajet ${rideId} réservé !`);
+    // Envoyer la réservation au serveur via AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert(xhr.responseText);
+            // Rafraîchir la liste des trajets après la réservation
+            location.reload();
         }
+    };
 
+    xhr.open("POST", "reserve_ride.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(`rideId=${rideId}`);
+}
 //proximite 
 
 function searchNearby() {
