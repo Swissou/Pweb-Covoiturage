@@ -4,7 +4,12 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rideId = $_POST["rideId"];
     $reservedSeats = 1; // Réserver une place par défaut
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "projetpweb";
 
+	$conn = new mysqli($servername, $username, $password, $dbname);
     
 
     if ($conn->connect_error) {
