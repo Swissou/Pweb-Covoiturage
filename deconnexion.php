@@ -1,6 +1,10 @@
 <?php
-session_start();
-session_destroy();
-header("Location: page_acc.php");
-exit();
+    session_start();
+    $_SESSION = array();
+    session_destroy();
+
+    header('Location:/');
+    
+    exit;
+
 ?>

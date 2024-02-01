@@ -1,11 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projetpweb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+// connexion à la base de données 
+include_once "connexion_bd.php";
 
 if ($conn->connect_error) {
     die("Échec de la connexion à la base de données : " . $conn->connect_error);

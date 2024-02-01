@@ -17,13 +17,21 @@ ADD COLUMN destination_latitude DOUBLE,
 ADD COLUMN destination_longitude DOUBLE;
 
 /*table utilisateur*/
-CREATE TABLE utilisateurs(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	Email VARCHAR(255) NOT NULL,
-	mdp VARCHAR(255) NOT NULL
-);
-/*table resarvation*/
+CREATE TABLE utilisateurs (
+    `Id_Utilisateur` INT NOT NULL AUTO_INCREMENT ,
+    `Nom` TEXT NOT NULL ,
+    `Prenom` TEXT NOT NULL ,
+    `Telephone` INT NOT NULL ,
+    `Email` VARCHAR(100) NOT NULL ,
+    `MDP` VARCHAR(255) NOT NULL , 
+    `Matricule` VARCHAR(20) NOT NULL , 
+    `Admin` TINYINT(1) NOT NULL DEFAULT '0' , 
+    PRIMARY KEY (`Id_Utilisateur`), 
+    UNIQUE `Email` (`Email`))
+    ENGINE = MyISAM;
 
+
+/*table resarvation*/
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_utilisateur INT,

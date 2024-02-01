@@ -4,9 +4,15 @@
     $utilisateur = "root";
     $mot_de_passe = "";
     $nom_base_données = "bdpweb";
-    $connexion = mysqli_connect($nom_serv, $utilisateur, $mot_de_passe, $nom_base_données);
+    $conn = mysqli_connect($nom_serv, $utilisateur, $mot_de_passe, $nom_base_données);
 
-    if (!$connexion) {
+
+    // !!!!!!!!!!!!!!!!!!! important !!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // pour se connecter à la base de données on utilise la commande : 
+    // include_once "connexion_bd.php";
+
+    if (!$conn) {
         echo " Vous n'êtes pas connecté à la base de donnée.";
     }
 ?>
