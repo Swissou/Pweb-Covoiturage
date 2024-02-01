@@ -1,39 +1,17 @@
 /* Styles CSS inchangés pour la simplicité */
 
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+}
+
+
         body {
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #d3d0e5;
+            min-height: 100vh;
+            background-color: #DEDEDE;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1em;
-            text-align: center;
-			background: url('imagecov.png')no-repeat;
-			background-position: right;
-			background-size:200px;
-        }
-		h1{
-			
-			color: #333; 
-			text-align: left; 
-		}
-        nav {
-			
-            background-color: #000c89;
-            padding: 0.5em;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5em 1em;
-            margin: 0 1em;
-        }
 
         #rideList {
             display: flex;
@@ -55,24 +33,39 @@
 			
         }
 		
-		button {
-			padding: 5px 10px;
-			margin:5px;
-			font-size: 12px;
-			cursor: pointer;
-			background-color: #68a0f1; 
-			color: #fff;
-			border: none; 
-			border-radius: 15px; 
-			transition: background-color 0.5s;
-			
-			
-			
+.test{
+    margin-top: 100px;
 }
 
-		button:hover {
-			background-color: #000c89; 
-}
+        button {
+            --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
+            --accent: #B2FFFF;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 1.1em;
+            background-color: #FFB2B2;
+            cursor: pointer;
+            color: #212121;
+            padding: 1em 2em;
+            transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s, letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+            box-shadow: 13px 13px 10px #1c1c1c, -13px -13px 10px #262626;
+            display: block;
+            margin: auto;
+            margin-top: 30px;
+        }
+        
+        button:hover {
+            box-shadow: var(--hover-shadows);
+        }
+        
+        button:active {
+            box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
+            background-color: var(--accent);
+            transform: scale(0.95);
+        }
+
+
 		/* Styles pour le popup */
         .popup {
             display: none;
@@ -102,4 +95,4 @@
             height: 300px;
             width: 400px; 
         }
-        
+                
