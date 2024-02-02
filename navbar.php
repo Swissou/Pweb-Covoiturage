@@ -15,7 +15,7 @@
         <ul>
             <li><a href="<?php echo $router->generate('home'); ?>" class="link">Accueil</a></li>
             <li><a href="<?php echo $router->generate('recherche'); ?>" class="link">Rechercher</a></li>
-            <li><a href="" class="link">Publier un trajet</a></li>
+            <li><a href="<?php echo $router->generate('trajet'); ?>" class="link">Publier un trajet</a></li>
 
             <?php
                 if(!isset($_SESSION['Id_Utilisateur'])){
