@@ -15,9 +15,18 @@
         <ul>
             <li><a href="<?php echo $router->generate('home'); ?>" class="link">Accueil</a></li>
             <li><a href="<?php echo $router->generate('recherche'); ?>" class="link">Rechercher</a></li>
+			<?php
+                if(isset($_SESSION['chauffeur'])&& $_SESSION['chauffeur']==1){
+            ?>
             <li><a href="<?php echo $router->generate('trajet'); ?>" class="link">Publier un trajet</a></li>
-
+			<li><a href="<?php echo $router->generate('gerer_trajets'); ?>" class="link">Gérer Mes Trajets</a></li>
+			<?php
+				}
+                if(isset($_SESSION['client'])&& $_SESSION['client']==1){
+            ?>
+			<li><a href="<?php echo $router->generate('list_reservations'); ?>" class="link">Mes Réservations</a></li>
             <?php
+				}
                 if(!isset($_SESSION['Id_Utilisateur'])){
             ?>
             <li><a href="<?php echo $router->generate('connexion'); ?>" class="link" id="hbg">Connexion</a></li>
