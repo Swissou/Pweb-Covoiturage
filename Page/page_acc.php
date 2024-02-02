@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     <link rel="stylesheet" href="Public/Style/page_acc.css">
 
@@ -70,40 +71,38 @@
 <script>
     var map; // Déclarer la variable de carte en dehors de la fonction showMap
 
-    function showMap(lieuDepartLat, lieuDepartLng, destLat, destLng) {
-        // Détruire la carte existante si elle a été initialisée
-        if (map) {
-            map.remove();
-        }
-
-        // Afficher la popup avec la carte
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('popup').style.display = 'block';
-
-        // Création de la carte
-        map = L.map('map').fitBounds([
-            [lieuDepartLat, lieuDepartLng],
-            [destLat, destLng]
-        ]);
-
-        // Ajout d'une couche de tuiles OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Ajout de marqueurs pour les positions
-        L.marker([lieuDepartLat, lieuDepartLng]).addTo(map)
-            .bindPopup('Lieu de départ');
-
-        L.marker([destLat, destLng]).addTo(map)
-            .bindPopup('Destination');
-
-        // Ajout d'une ligne reliant les deux positions
-        var polyline = L.polyline([
-            [lieuDepartLat, lieuDepartLng],
-            [destLat, destLng]
-        ], { color: 'blue' }).addTo(map);
+   function showMap(lieuDepartLat, lieuDepartLng, destLat, destLng) {
+    if (map) {
+        map.remove();
     }
+
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popup').style.display = 'block';
+
+    map = L.map('map').setView([lieuDepartLat, lieuDepartLng], 10); /* Ajustez le niveau de zoom ici */
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(lieuDepartLat, lieuDepartLng),
+            L.latLng(destLat, destLng)
+        ],
+        routeWhileDragging: true,
+        show: false  // Cela masque les instructions de l'itinéraire
+    }).addTo(map);
+
+    L.marker([lieuDepartLat, lieuDepartLng]).addTo(map)
+        .bindPopup('Lieu de départ');
+
+    L.marker([destLat, destLng]).addTo(map)
+        .bindPopup('Destination');
+
+    L.marker([lieuDepartLat, lieuDepartLng], { opacity: 0 }).addTo(map);
+    L.marker([destLat, destLng], { opacity: 0 }).addTo(map);
+}
 
     function hidePopup() {
         document.getElementById('overlay').style.display = 'none';
