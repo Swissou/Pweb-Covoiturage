@@ -8,6 +8,7 @@ $router->map('GET|POST', '/Connexion', 'interface_connexion' ,'connexion');
 $router->map('GET|POST', '/Inscription', 'interface_inscription' ,'inscription');
 $router->map('GET|POST', '/Recherche', 'recherche' ,'recherche');
 $router->map('GET', '/Deconnexion', 'deconnexion' ,'deconnexion');
+$router->map('GET|POST', '/trajet', 'trajet' ,'trajet');
 
 $match = $router->match();
 
