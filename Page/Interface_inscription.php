@@ -16,16 +16,23 @@
             // hashage du mot de passe 
             $hash = password_hash($MDP, PASSWORD_DEFAULT); 
             
+            // connexion à la base de données
             include_once "connexion_bd.php";
 
+            // verrification si l'Email est deja utilisé 
             $req1 = mysqli_query($conn,"SELECT * FROM utilisateurs WHERE Email='$Email'");
             $cpt_ligne = mysqli_num_rows($req1);
+            
+            
             if($cpt_ligne > 0){
                 $erreur = " Addresse mail déjà utilisé, Veuillez réessayer .";
             }else{
                 $req = mysqli_query($conn, "INSERT INTO utilisateurs VALUES (NULL,'$Nom','$Prenom','$Telephone','$Email','$hash','$Matricule','0')");
-                
+
                 if ($req) {
+                    $req2 = mysqli_query($conn, "SELECT * FROM utilisateurs WHERE Email='$Email' ");
+                    $row = mysqli_fetch_assoc($req2);
+
                     $_SESSION['Email'] = $row['Email'];
                     $_SESSION['Id_Utilisateur'] = $row['Id_Utilisateur'];
 
