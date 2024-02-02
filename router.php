@@ -4,11 +4,13 @@ require 'Altorouter/Altorouter.php';
 $router = new AltoRouter();
 
 $router->map('GET|POST', '/', 'page_acc' ,'home');
-$router->map('GET|POST', '/Connexion', 'interface_connexion' ,'connexion');
-$router->map('GET|POST', '/Inscription', 'interface_inscription' ,'inscription');
-$router->map('GET|POST', '/Recherche', 'recherche' ,'recherche');
-$router->map('GET', '/Deconnexion', 'deconnexion' ,'deconnexion');
+$router->map('GET|POST', '/connexion', 'interface_connexion' ,'connexion');
+$router->map('GET|POST', '/inscription', 'interface_inscription' ,'inscription');
+$router->map('GET|POST', '/recherche', 'recherche' ,'recherche');
+$router->map('GET', '/deconnexion', 'deconnexion' ,'deconnexion');
 $router->map('GET|POST', '/trajet', 'trajet' ,'trajet');
+$router->map('GET', '/gerer_trajets', 'gerer_trajets' ,'gerer_trajets');
+$router->map('GET', '/list_reservations', 'list_reservations' ,'list_reservations');
 
 $match = $router->match();
 
