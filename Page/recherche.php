@@ -76,7 +76,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script>
-    // ... (votre code JavaScript reste inchangé)
+          var map;
+
+ function showMap(lieuDepartLat, lieuDepartLng, destLat, destLng) {
+    if (map) {
+        map.remove();
+    }
+
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popup').style.display = 'block';
+
+    map = L.map('map').setView([lieuDepartLat, lieuDepartLng], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(lieuDepartLat, lieuDepartLng),
+            L.latLng(destLat, destLng)
+        ],
+        routeWhileDragging: true,
+        show: false
+    }).addTo(map);
+
+    L.marker([lieuDepartLat, lieuDepartLng]).addTo(map)
+        .bindPopup('Lieu de départ');
+
+    L.marker([destLat, destLng]).addTo(map)
+        .bindPopup('Destination');
+
+    // Ajout de la ligne suivante pour forcer le recalcul des dimensions de la carte
+    map.invalidateSize();
+
+    // Supprimer ou ajuster le code suivant pour masquer ou personnaliser la description de l'itinéraire
+    var routeDescription = document.createElement("div");
+    routeDescription.innerHTML = "Votre itinéraire détaillé ici.";
+    document.getElementById('map').appendChild(routeDescription);
+}
+
+
+        function hidePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+///reservation
+        function reserveRide(rideId) {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText);
+                    location.reload();
+                }
+            };
+
+            xhr.open("POST", "reserve_ride.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(`rideId=${rideId}`);
+        }
+///proximité
+function searchNearby() {
+	
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    } else {
+        console.error("La géolocalisation n'est pas prise en charge par votre navigateur.");
+    }
+}
+
+function successCallback(position) {
+    const userLat = position.coords.latitude;
+    const userLng = position.coords.longitude;
+
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const rideList = document.getElementById('rideList');
+            rideList.innerHTML = xhr.responseText;
+        }
+    };
+
+    xhr.open("GET", `search_nearby.php?userLat=${userLat}&userLng=${userLng}`, true);
+    xhr.send();
+}
+
+function errorCallback(error) {
+    console.error("Erreur lors de la récupération de la position : ", error);
+}
+
 </script>
 
 </body>
