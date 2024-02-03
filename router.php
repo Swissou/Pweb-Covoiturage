@@ -11,7 +11,9 @@ $router->map('GET', '/deconnexion', 'deconnexion' ,'deconnexion');
 $router->map('GET|POST', '/trajet', 'trajet' ,'trajet');
 $router->map('GET', '/gerer_trajets', 'gerer_trajets' ,'gerer_trajets');
 $router->map('GET', '/list_reservations', 'list_reservations' ,'list_reservations');
-
+$router->map('GET|POST', '/modifier_trajet', 'modifier_trajet' ,'modifier_trajet');
+$router->map('GET|POST', '/supprimer_trajet', 'supprimer_trajet' ,'supprimer_trajet');
+$router->map('GET|POST', '/annuler_reservation', 'annuler_reservation' ,'annuler_reservation');
 $match = $router->match();
 
 
