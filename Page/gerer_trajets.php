@@ -20,7 +20,7 @@
 
 <?php include 'navbar.php';?>
 
-<div id="rideList">
+<div id="rideList" style="margin-top:50px;">
 	<?php
 
 
@@ -63,27 +63,34 @@ $conn->close();
 	</div>
 <script>
     function deleteRide(rideId) {
-        if (confirm("Voulez-vous vraiment supprimer ce trajet?")) {
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert(xhr.responseText);
+    console.log("Function deleteRide is called.");
+    if (confirm("Voulez-vous vraiment supprimer ce trajet?")) {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Supprimez les balises HTML de la réponse
+                    const responseText = xhr.responseText.replace(/<[^>]*>/g, '');
+                    alert(responseText);
                     // Rafraîchir la liste des trajets après la suppression
                     location.reload();
+                } else {
+                    console.error("Erreur lors de la suppression du trajet:", xhr.status, xhr.statusText);
                 }
-            };
+            }
+        };
 
-            xhr.open("POST", "supprimer_trajet.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send(`rideId=${rideId}`);
-        }
+        xhr.open("POST", "<?php echo $router->generate('supprimer_trajet'); ?>", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(`rideId=${rideId}`);
     }
-	
-	
-function modifierTrajet(trajetId) {
-    // Redirigez l'utilisateur vers la page de modification du trajet en utilisant le trajetId
-    window.location.replace("modifier_trajet.php?trajetId=" + trajetId);
 }
+
+	
+    function modifierTrajet(trajetId) {
+        // Redirigez l'utilisateur vers la page de modification du trajet en utilisant le trajetId
+        window.location.replace("<?php echo $router->generate('modifier_trajet'); ?>?trajetId=" + trajetId);
+    }
 
 
 </script>

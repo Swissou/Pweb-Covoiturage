@@ -11,7 +11,7 @@
 
     <?php include 'navbar.php';?>
 
-<div id="rideList">
+<div id="rideList" style="margin-top:50px;">
 <?php
 
 
@@ -38,7 +38,8 @@ if (isset($_SESSION["Id_Utilisateur"]) && $_SESSION["Id_Utilisateur"]) {
 				echo "<div class='ride-card'>";
                 echo "<p><strong>Réservation ID :</strong>  " . $row["id"] . "</p>";
                 echo "<p><strong> Date de réservation : </strong> " . $row["heur_reservation"] . "</p>";
-                echo"<button>Annuler </button>";
+				echo "<p><strong> l'etat de trajet : </strong> " . $row["etat"] . "</p>";
+                echo"<button onclick='deleteRide({$row["id"]})'>Annuler </button>";
 				echo '</div>';
             }
         } else {
@@ -53,7 +54,33 @@ if (isset($_SESSION["Id_Utilisateur"]) && $_SESSION["Id_Utilisateur"]) {
 
 // Fermeture de la connexion à la base de données
 $conn->close();
+
+
 ?>
+<script>
+   function deleteRide(reservationId) {
+            console.log("Function deleteRide is called.");
+            if (confirm("Voulez-vous vraiment annuler cette réservation?")) {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Supprimez les balises HTML de la réponse
+                            const responseText = xhr.responseText.replace(/<[^>]*>/g, '');
+                            alert(responseText);
+                            // Rafraîchir la liste des réservations après l'annulation
+                            location.reload();
+                        } else {
+                            console.error("Erreur lors de l'annulation de la réservation:", xhr.status, xhr.statusText);
+                        }
+                    }
+                };
+
+                xhr.open("POST", "<?php echo $router->generate('annuler_reservation'); ?>", true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify({ reservationId: reservationId }));
+            }
+        }</script>
 </div>
 </body>
 </html>
