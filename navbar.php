@@ -10,10 +10,10 @@
 <body>
     
     <nav>
-            <a href="" class="logo">RoadBuddy</a>
+            <a href="<?php echo $router->generate('home'); ?>" class="logo">RoadBuddy</a>
         <div class="link-bar">   
         <ul>
-            <li><a href="<?php echo $router->generate('home'); ?>" class="link">Accueil</a></li>
+            <!-- <li>" class="link">Accueil</a></li> -->
             <li><a href="<?php echo $router->generate('recherche'); ?>" class="link">Rechercher</a></li>
 			<?php
                 if(isset($_SESSION['Id_Utilisateur'])){

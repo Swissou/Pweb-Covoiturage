@@ -1,15 +1,9 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bdpweb";
+
+//connexion à la base de données 
+include_once "connexion_bd.php";
+
 $opencageApiKey = "77207f924a3f4ec8ae0bda69a9258e27"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Échec de la connexion à la base de données : " . $conn->connect_error);
-}
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -74,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php include 'navbar.php';?>
 
+
+<div class="test">   
     <div id="searchForm">
     <h2>Formulaire de Proposition de Trajet</h2>
     <form method="post" onsubmit="return validateForm()">
@@ -100,6 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button type="submit">Proposer Trajet</button>
     </form>
+</div> 
+
 
     <script>
         

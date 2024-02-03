@@ -28,7 +28,7 @@ body {
 .card h1 {
     text-align: center;
     font-size: 42px;
-    color: #FFB2B2;
+    color: #1db954b2;
 }
 
 .message_erreur {
@@ -70,7 +70,7 @@ body {
     letter-spacing: 0.1em;
     border: none;
     border-radius: 1.1em;
-    background-color: #FFB2B2;
+    background-color: #1db954b2;
     cursor: pointer;
     color: #212121;
     padding: 1em 2em;
