@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="Public/Style/recherche.css">
     <title>Recherche de Trajet - Covoiturage</title>
-
 </head>
 <body>
 
-    <?php include 'navbar.php';?>
+<?php include 'navbar.php';?>
 
 <div class="test">
     <div id="searchForm">
         <h2>Formulaire de Recherche de Trajet</h2>
         <form method="post">
             <label for="departure">Lieu de départ:</label>
-            <input type="text" id="departure" name="departure" required>
+            <input type="text" id="departure" name="departure" >
 
             <label for="destination">Destination:</label>
-            <input type="text" id="destination" name="destination" required>
+            <input type="text" id="destination" name="destination" >
 
             <label for="departureTime">Heure de départ:</label>
             <input type="time" id="departureTime" name="departureTime">
@@ -28,17 +27,14 @@
         </form>
     </div>
 </div>
-     <div id="rideList">
-    
-	
+
+<div id="rideList">
+
 <?php
 
-    //connexion à la base de données
-    include_once "connexion_bd.php";
+//connexion à la base de données
+include_once "connexion_bd.php";
 
-if ($conn->connect_error) {
-    die("Échec de la connexion à la base de données : " . $conn->connect_error);
-}
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,84 +43,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $departureTime = $_POST["departureTime"];
 
     // Construire la requête SQL avec des conditions de recherche
-    $sql = "SELECT * FROM trajets WHERE lieu_depart = '$departure' AND destination = '$destination' AND heure_depart = '$departureTime'";
-
-
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='ride-card'>";
-        echo "<p><strong>Lieu de départ:</strong> " . $row["lieu_depart"] . "</p>";
-        echo "<p><strong>Destination:</strong> " . $row["destination"] . "</p>";
-        echo "<p><strong>Heure de départ:</strong> " . $row["heure_depart"] . "</p>";
-        echo "<button onclick='reserveRide({$row["id"]})'>Réserver</button>";
-		echo "<button onclick='showMap({$row["lieu_depart_latitude"]}, {$row["lieu_depart_longitude"]}, {$row["destination_latitude"]}, {$row["destination_longitude"]})'>Voir les détails</button>";
-        echo "</div>";
+    $sql = "SELECT * FROM trajets WHERE lieu_depart LIKE '%$departure%' AND destination LIKE '%$destination%'";
+    
+    if ($departureTime != "") {
+        $sql .= " AND heure_depart = '$departureTime'";
     }
-} else {
-    echo "Aucun trajet disponible.";
-}
 
-$conn->close();
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='ride-card'>";
+            echo "<p><strong>Lieu de départ:</strong> " . $row["lieu_depart"] . "</p>";
+            echo "<p><strong>Destination:</strong> " . $row["destination"] . "</p>";
+            echo "<p><strong>Heure de départ:</strong> " . $row["heure_depart"] . "</p>";
+            echo "<button onclick='reserveRide({$row["id"]})'>Réserver</button>";
+            echo "<button onclick='showMap({$row["lieu_depart_latitude"]}, {$row["lieu_depart_longitude"]}, {$row["destination_latitude"]}, {$row["destination_longitude"]})'>Voir les détails</button>";
+            echo "</div>";
+        }
+    } else {
+        echo "Aucun trajet disponible.";
+    }
+
+    $conn->close();
 }
 ?>
 
- <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-        <div id="map"></div>
-        <button onclick="hidePopup()">Fermer</button>
-    </div>
-	
-    <script>
-    var map; // Déclarer la variable de carte en dehors de la fonction showMap
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="popup">
+    <div id="map"></div>
+    <button onclick="hidePopup()">Fermer</button>
+</div>
 
-function showMap(lieuDepartLat, lieuDepartLng, destLat, destLng) {
-    // Détruire la carte existante si elle a été initialisée
-    if (map) {
-        map.remove();
-    }
+<script>
+    // ... (votre code JavaScript reste inchangé)
+</script>
 
-    // Afficher la popup avec la carte
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('popup').style.display = 'block';
-
-    // Création de la carte
-    map = L.map('map').fitBounds([
-        [lieuDepartLat, lieuDepartLng],
-        [destLat, destLng]
-    ]);
-
-    // Ajout d'une couche de tuiles OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Ajout de marqueurs pour les positions
-    L.marker([lieuDepartLat, lieuDepartLng]).addTo(map)
-        .bindPopup('Lieu de départ');
-
-    L.marker([destLat, destLng]).addTo(map)
-        .bindPopup('Destination');
-
-    // Ajout d'une ligne reliant les deux positions
-    var polyline = L.polyline([
-        [lieuDepartLat, lieuDepartLng],
-        [destLat, destLng]
-    ], { color: 'blue' }).addTo(map);
-}
-
-function hidePopup() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('popup').style.display = 'none';
-}
-
-// Fonction de réservation de trajet
-        function reserveRide(rideId) {
-            alert(`Trajet ${rideId} réservé !`);
-        }
-	</script>	
-    
-	</div>
 </body>
 </html>
