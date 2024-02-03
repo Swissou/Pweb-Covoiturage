@@ -30,9 +30,6 @@ CREATE TABLE utilisateurs (
     UNIQUE `Email` (`Email`))
     ENGINE = MyISAM;
 
-alter table utilisateurs ADD COLUMN client TINYINT(1) NOT NULL DEFAULT '0';
-alter table utilisateurs ADD COLUMN chauffeur TINYINT(1) NOT NULL DEFAULT '0';
-
 /*table resarvation*/
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,

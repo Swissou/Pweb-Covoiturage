@@ -31,12 +31,11 @@
                 if ($verify) { 
                     $_SESSION['Email'] = $row['Email'];
                     $_SESSION['Id_Utilisateur'] = $row['Id_Utilisateur'];
-                   $_SESSION['client'] = $row['client'];
 					$_SESSION['admin'] = $row['Admin'];
-					$_SESSION['chauffeur'] = $row['chauffeur'];  
+ 
                     header("Location:". $router->generate('home'));
                 } else { 
-                    $erreur = " Mot de passe incorectes !";
+                    $erreur = " Mot de passe incorrect !";
                 }     
             }else{
                 $erreur = " Adresse E-mail inexistante !";
