@@ -16,6 +16,8 @@ ADD COLUMN lieu_depart_longitude DOUBLE,
 ADD COLUMN destination_latitude DOUBLE,
 ADD COLUMN destination_longitude DOUBLE;
 
+ALTER TABLE trajets ADD COLUMN id_utilisateur INT, ADD FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id);
+
 /*table utilisateur*/
 CREATE TABLE utilisateurs (
     `Id_Utilisateur` INT NOT NULL AUTO_INCREMENT ,
