@@ -21,7 +21,11 @@
             <li><a href="<?php echo $router->generate('trajet'); ?>" class="link">Publier Un Trajet</a></li>
 			<li><a href="<?php echo $router->generate('gerer_trajets'); ?>" class="link">Mes Trajets</a></li>
 			<li><a href="<?php echo $router->generate('list_reservations'); ?>" class="link">Mes Réservations</a></li>
-
+            <?php
+				}        
+                if(isset($_SESSION['Admin']) && $_SESSION['Admin'] == 1){
+            ?>  
+            <li><a href="<?php echo $router->generate('Admin'); ?>" class="link">Admin</a></li>  
             <?php
 				}
                 if(!isset($_SESSION['Id_Utilisateur'])){

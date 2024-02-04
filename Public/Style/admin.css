@@ -47,15 +47,14 @@ body {
     /* width: 65%; */
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     background-color: #f4f4f4;
     border-radius: 10px;
     overflow-x: scroll;
+    overflow: auto;
 }
 
-.tt{
-    overflow-x: scroll;
-}
+
 
 .link-a{
     font-size: 25px;

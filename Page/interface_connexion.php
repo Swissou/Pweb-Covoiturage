@@ -31,7 +31,7 @@
                 if ($verify) { 
                     $_SESSION['Email'] = $row['Email'];
                     $_SESSION['Id_Utilisateur'] = $row['Id_Utilisateur'];
-					$_SESSION['admin'] = $row['Admin'];
+					$_SESSION['Admin'] = $row['Admin'];
  
                     header("Location:". $router->generate('home'));
                 } else { 
