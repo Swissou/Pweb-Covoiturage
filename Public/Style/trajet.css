@@ -13,6 +13,14 @@ body {
     justify-content: center;
 }
 
+#successMessage {
+    text-align: center;
+    color: #14562d;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 800px;
+}
+
 #searchForm {
     width: 500px;
     padding: 70px;
