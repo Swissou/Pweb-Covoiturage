@@ -22,7 +22,7 @@
     </section>
 
     <section class="container">
-        <a href="<?php echo $router->generate('ajout_user'); ?>"class="link-a"> <img src="../Public/assets/icon-ajouter.png" > Ajouter</a>
+        <a href="<?php echo $router->generate('ajout_user'); ?>"class="link-a"> <img src="../Public/assets/icon-ajouter.png" id="t"> Ajouter</a>
 
         <div class="tt">
         <table>
@@ -54,8 +54,8 @@
                             <td><?=$row['Matricule']?></td>
                             <td><?=$row['Telephone']?></td>
                             <td><?=$row['Admin']?></td>
-                            <td><a href="<?php echo $router->generate('modifier_user',['id'=> $row['Id_Utilisateur']]); ?>"><img src="../Public/assets/icon-modifier.png" ></a></td>
-                            <td><a href="<?php echo $router->generate('supprimer_user',['id'=> $row['Id_Utilisateur']]); ?>"><img src="../Public/assets/icon-supprimer.png" ></a></td>
+                            <td><a href="<?php echo $router->generate('modifier_user',['id'=> $row['Id_Utilisateur']]); ?>"><img src="../Public/assets/icon-modifier.png" id="t"></a></td>
+                            <td><a href="<?php echo $router->generate('supprimer_user',['id'=> $row['Id_Utilisateur']]); ?>"><img src="../Public/assets/icon-supprimer.png" id="t"></a></td>
                         </tr>
 
                         <?php
