@@ -14,6 +14,11 @@ $router->map('GET', '/list_reservations', 'list_reservations' ,'list_reservation
 $router->map('GET|POST', '/modifier_trajet', 'modifier_trajet' ,'modifier_trajet');
 $router->map('GET|POST', '/supprimer_trajet', 'supprimer_trajet' ,'supprimer_trajet');
 $router->map('GET|POST', '/annuler_reservation', 'annuler_reservation' ,'annuler_reservation');
+$router->map('GET|POST', '/Admin', 'admin_accueil' ,'Admin');
+$router->map('GET|POST', '/Adimin-Ajout-Utilisateur', 'admin_ajout_user' ,'ajout_user');
+$router->map('GET|POST', '/Adimin-Modifier-Utilisateur-[i:id]', 'admin_modifier_user' ,'modifier_user');
+$router->map('GET|POST', '/Adimin-Supprimer-Utilisateur-[i:id]', 'admin_supprimer_user' ,'supprimer_user');
+
 $match = $router->match();
 
 
