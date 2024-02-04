@@ -5,6 +5,8 @@ include_once "connexion_bd.php";
 
 $opencageApiKey = "77207f924a3f4ec8ae0bda69a9258e27"; 
 
+$message = "";
+
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $departure = $_POST["departure"];
@@ -33,18 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO trajets (lieu_depart, destination, heure_depart, conducteur, places_disponibles, lieu_depart_latitude, lieu_depart_longitude, destination_latitude, destination_longitude) 
                     VALUES ('$departure', '$destination', '$departureTime', '$driver', '$availableSeats', '$latitude', '$longitude', '$latitude_d', '$longitude_d')";
 
-            if ($conn->query($sql) === TRUE) {
-                echo "Trajet proposé avec succès.";
+          if ($conn->query($sql) === TRUE) {
+                $message = "Trajet proposé avec succès.";
             } else {
-                echo "Erreur lors de la proposition du trajet : " . $conn->error;
+                $message ="Erreur lors de la proposition du trajet : " . $conn->error;
             }
         } else {
-            echo "Erreur lors de la récupération des coordonnées du lieu de départ.";
+            $message ="Erreur lors de la récupération des coordonnées du lieu de départ.";
         }
     } else {
-        echo "Erreur lors de la récupération des coordonnées de la destination.";
+        $message ="Erreur lors de la récupération des coordonnées de la destination.";
     }
-
     $conn->close();
 }
 ?>
@@ -67,6 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <?php include 'navbar.php';?>
+
+ <div id="successMessage">
+        <?php echo $message; ?>
+    </div>
 
 
 <div class="test">   
