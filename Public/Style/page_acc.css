@@ -92,7 +92,19 @@
             z-index: 999;
         }
 		#map {
-            height: 300px;
-            width: 400px; 
+            height: 500px;
+            width: 800px; 
         }
         
+        .leaflet-touch .leaflet-bar{
+            display: none !important;
+        }
+
+        @media screen and (max-width: 1023px) {
+            
+            #map {
+                height: 400px;
+                width: 300px; 
+            }
+            
+        }
