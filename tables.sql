@@ -1,3 +1,18 @@
+/*table utilisateur*/
+CREATE TABLE utilisateurs (
+    `Id_Utilisateur` INT NOT NULL AUTO_INCREMENT ,
+    `Nom` TEXT NOT NULL ,
+    `Prenom` TEXT NOT NULL ,
+    `Telephone` INT NOT NULL ,
+    `Email` VARCHAR(100) NOT NULL ,
+    `MDP` VARCHAR(255) NOT NULL , 
+    `Matricule` VARCHAR(20) NOT NULL , 
+    `Admin` TINYINT(1) NOT NULL DEFAULT '0' , 
+    PRIMARY KEY (`Id_Utilisateur`), 
+    UNIQUE `Email` (`Email`))
+    ENGINE = MyISAM;
+    
+    
 /*table trajets*/
 
 CREATE TABLE trajets (
@@ -18,19 +33,7 @@ ADD COLUMN destination_longitude DOUBLE;
 
 ALTER TABLE trajets ADD COLUMN id_utilisateur INT, ADD FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id);
 
-/*table utilisateur*/
-CREATE TABLE utilisateurs (
-    `Id_Utilisateur` INT NOT NULL AUTO_INCREMENT ,
-    `Nom` TEXT NOT NULL ,
-    `Prenom` TEXT NOT NULL ,
-    `Telephone` INT NOT NULL ,
-    `Email` VARCHAR(100) NOT NULL ,
-    `MDP` VARCHAR(255) NOT NULL , 
-    `Matricule` VARCHAR(20) NOT NULL , 
-    `Admin` TINYINT(1) NOT NULL DEFAULT '0' , 
-    PRIMARY KEY (`Id_Utilisateur`), 
-    UNIQUE `Email` (`Email`))
-    ENGINE = MyISAM;
+
 
 /*table resarvation*/
 CREATE TABLE reservations (
